@@ -1,4 +1,4 @@
-package pl.school.app;
+package pl.schoolms.app;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
