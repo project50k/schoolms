@@ -17,10 +17,48 @@
 	<c:if test="${sessionScope.user!=null}">
 		<%@ include file="jspf/main_menu.jspf"%>
 	</c:if>
+
+
+
+	<p>Student List</p>
 	
-	<h1>Welcome at School System Manager</h1>
-	<h2>Please login to your account.</h2>
-	<h2>If you don't have account please contact with your teacher.</h2>
+	<table class="darkTable">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>NAME</th>
+				<th>E-MAIL</th>
+				<th>DETAILS</th>
+				<th>GROUP</th>
+				<th>OPTION</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tfoot>
+		<tbody>
+		<c:forEach items="${allStudents}" var="stud">
+		<tr>
+				<td><c:out value="${stud.id}" /></td>
+				<td><c:out value="${stud.username}" /></td>
+				<td><c:out value="${stud.email}" /></td>
+				<td>cell4_1</td>
+				<td>cell5_1</td>
+				<td>cell6_1</td>
+			</tr>
+		
+		</c:forEach>
+			
+		</tbody>
+		</tr>
+	</table>
 
 	<%@ include file="jspf/footer.jspf"%>
 

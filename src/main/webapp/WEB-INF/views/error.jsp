@@ -17,10 +17,14 @@
 	<c:if test="${sessionScope.user!=null}">
 		<%@ include file="jspf/main_menu.jspf"%>
 	</c:if>
+
 	
-	<h1>Welcome at School System Manager</h1>
-	<h2>Please login to your account.</h2>
-	<h2>If you don't have account please contact with your teacher.</h2>
+	<h1>ERROR PAGE<h1>
+	<h1>ERROR PAGE<h1>
+	<h1>ERROR PAGE<h1>
+	
+	
+	
 
 	<%@ include file="jspf/footer.jspf"%>
 

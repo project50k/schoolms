@@ -2,17 +2,19 @@ package pl.schoolms.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mindrot.jbcrypt.BCrypt;
 
+
 @Entity
-// @Table(name = "users")
 public class User {
 
 	@Id
@@ -30,7 +32,12 @@ public class User {
 	@Email
 	@Column(unique = true)
 	private String email;
-
+	// ----------------------------------------------
+	@ManyToOne(fetch = FetchType.EAGER)
+	//@JoinTable(name = "user_role")//, joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Role roles;
+	// ----------------------------------------------
+	
 	public User() {
 		super();
 	}
@@ -38,11 +45,18 @@ public class User {
 	public User(String username, String password, boolean enabled, String email) {
 		super();
 		this.username = username;
-		this.password = password;
+		setPassword(password);
 		this.enabled = enabled;
 		this.email = email;
 	}
 
+	public User(String username, String password, String email) {
+		super();
+		this.username = username;
+		setPassword(password);
+		this.email = email;
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -93,4 +107,16 @@ public class User {
 				+ ", email=" + email + "]";
 	}
 
+	//--------------------------------------------------
+	public Role getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Role roles) {
+		this.roles = roles;
+	}
+	
+	//--------------------------------------------------
+	
+	
 }
