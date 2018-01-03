@@ -1,29 +1,35 @@
 package pl.schoolms.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mindrot.jbcrypt.BCrypt;
 
-
 @Entity
+@Table(name = "user")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@NotNull
 	private long id;
-	@NotEmpty
-	@Column(unique = true)
-	private String username;
 	@NotEmpty
 	private String password;
 	@NotNull
@@ -34,43 +40,44 @@ public class User {
 	private String email;
 	// ----------------------------------------------
 	@ManyToOne(fetch = FetchType.EAGER)
-	//@JoinTable(name = "user_role")//, joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Role roles;
 	// ----------------------------------------------
-	
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private DetailStudent details;
+	// ----------------------------------------------
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "user_schoolgroup", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "schoolgroup_id") })
+	private Set<Schoolgroup> schoolgroups = new HashSet<>();
+	// ----------------------------------------------
+
 	public User() {
 		super();
 	}
 
-	public User(String username, String password, boolean enabled, String email) {
+	public User(String password, boolean enabled, String email, Role roles, DetailStudent details,
+			Set<Schoolgroup> schoolgroups) {
 		super();
-		this.username = username;
-		setPassword(password);
+		this.password = password;
 		this.enabled = enabled;
+		this.email = email;
+		this.roles = roles;
+		this.details = details;
+		this.schoolgroups = schoolgroups;
+	}
+
+	public User(String password, String email) {
+		super();
+		setPassword(password);
 		this.email = email;
 	}
 
-	public User(String username, String password, String email) {
-		super();
-		this.username = username;
-		setPassword(password);
-		this.email = email;
-	}
-	
 	public long getId() {
 		return id;
 	}
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public String getPassword() {
@@ -101,13 +108,7 @@ public class User {
 		this.email = email;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", enabled=" + enabled
-				+ ", email=" + email + "]";
-	}
-
-	//--------------------------------------------------
+	// --------------------------------------------------
 	public Role getRoles() {
 		return roles;
 	}
@@ -115,8 +116,27 @@ public class User {
 	public void setRoles(Role roles) {
 		this.roles = roles;
 	}
-	
-	//--------------------------------------------------
-	
-	
+
+	// --------------------------------------------------
+
+	public DetailStudent getDetails() {
+		return details;
+	}
+
+	public void setDetails(DetailStudent details) {
+		this.details = details;
+	}
+
+	// --------------------------------------------------
+
+	public Set<Schoolgroup> getSchoolgroups() {
+		return schoolgroups;
+	}
+
+	public void setSchoolgroups(Set<Schoolgroup> schoolgroups) {
+		this.schoolgroups = schoolgroups;
+	}
+
+	// --------------------------------------------------
+
 }

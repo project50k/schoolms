@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.schoolms.entity.Role;
+import pl.schoolms.entity.Schoolgroup;
 import pl.schoolms.entity.User;
 import pl.schoolms.repository.RoleRepository;
+import pl.schoolms.repository.SchoolgroupRepository;
 import pl.schoolms.repository.UserRepository;
 
 @Controller
@@ -24,15 +26,18 @@ public class StartController {
 	@Autowired
 	UserRepository userRepo;
 
+	@Autowired
+	SchoolgroupRepository schoolgroupRepo;
+	
 	@GetMapping("/addUsers")
 	@ResponseBody
 	public String addUsers() {
-		User u1 = new User("admin", "admin", "admin@admin.pl");
-		User u2 = new User("teacher", "teacher", "teacher@teacher.pl");
-		User u3 = new User("student", "student", "student@student.pl");
-		User u4 = new User("tytus", "tytus", "tytus@tytus.pl");
-		User u5 = new User("romek", "romek", "romek@romek.pl");
-		User u6 = new User("atomek", "atomek", "atomek@atomek.pl");
+		User u1 = new User("admin", "admin@admin.pl");
+		User u2 = new User("teacher", "teacher@teacher.pl");
+		User u3 = new User("student", "student@student.pl");
+		User u4 = new User("tytus", "tytus@tytus.pl");
+		User u5 = new User("romek", "romek@romek.pl");
+		User u6 = new User("atomek", "atomek@atomek.pl");
 		this.userRepo.save(u1);
 		this.userRepo.save(u2);
 		this.userRepo.save(u3);
@@ -54,6 +59,16 @@ public class StartController {
 		return "New role added";
 	}
 
+	@GetMapping("/addSchoolgroups")
+	@ResponseBody
+	public String addSchoolgroups() {
+		Schoolgroup scg1 = new Schoolgroup("Grupa 1");
+		Schoolgroup scg2 = new Schoolgroup("Grupa 2");
+		this.schoolgroupRepo.save(scg1);
+		this.schoolgroupRepo.save(scg2);		
+		return "New schoolgroups added";
+	}
+	
 	@GetMapping("/allUsers")
 	@ResponseBody
 	public String allUsers() {
@@ -103,6 +118,22 @@ public class StartController {
 		return "Role added to user";
 	}
 
+	@GetMapping("/addUserToSchoolGroup/{userid}/{schoolgroupid}")
+	@ResponseBody
+	public String addUserToSchoolGroup(@PathVariable long userid, @PathVariable long schoolgroupid) {
+		User tmpUser = this.userRepo.findById(userid);
+		Schoolgroup tmpSchoolGroup = this.schoolgroupRepo.findById(schoolgroupid);
+		if (tmpUser.getRoles().getName().equals("studentRole")&& tmpSchoolGroup!=null) {
+			tmpUser.getSchoolgroups().add(tmpSchoolGroup);
+			tmpSchoolGroup.getUsers().add(tmpUser);
+			this.userRepo.save(tmpUser);
+			this.schoolgroupRepo.save(tmpSchoolGroup);
+			return "User added to school group";
+		}
+		return "Houston, Huston We've got problems";
+	}
+	
+	
 //	@GetMapping("/checkRoleBody")
 //	@ResponseBody
 //	public String checkRoleBody() {

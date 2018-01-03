@@ -12,12 +12,12 @@
 	<div class="login">
 		<c:choose>
 			<c:when test="${sessionScope.user==null}">
-				<a href='register'>Register</a>
-				<a href='login'>Login</a>
+				<a href='${pageContext.request.contextPath}/user/register'>Register</a>
+				<a href='${pageContext.request.contextPath}/user/login'>Login</a>
 			</c:when>
 			<c:otherwise>
 				User: ${sessionScope.user.email}
-				<a href='logout'>Logout</a>
+				<a href='${pageContext.request.contextPath}/user/logout'>Logout</a>
 			</c:otherwise>
 		</c:choose>
 	</div>

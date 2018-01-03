@@ -1,6 +1,7 @@
 package pl.schoolms.entity;
 
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -9,37 +10,40 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+
+
 @Entity
-@Table(name = "role")
-public class Role {
+@Table(name = "schoolgroup")
+public class Schoolgroup {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@NotNull
 	private long id;
 	@NotEmpty
 	@Column(unique = true)
-	private String name;
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "roles")
-	private Set<User> users;
+	private String groupname;
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "schoolgroups")
+	private Set<User> users = new HashSet<>();
 
-	public Role() {
+	public Schoolgroup() {
 		super();
 	}
-
-	public Role(String name) {
+	
+	public Schoolgroup(String groupname) {
 		super();
-		this.name = name;
+		this.groupname = groupname;
 	}
 
-	public Role(String name, Set<User> users) {
+	public Schoolgroup(String groupname, Set<User> users) {
 		super();
-		this.name = name;
+		this.groupname = groupname;
 		this.users = users;
 	}
 
@@ -51,12 +55,12 @@ public class Role {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getGroupname() {
+		return groupname;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setGroupname(String groupname) {
+		this.groupname = groupname;
 	}
 
 	public Set<User> getUsers() {
@@ -67,11 +71,4 @@ public class Role {
 		this.users = users;
 	}
 
-	@Override
-	public String toString() {
-		return "Role [id=" + id + ", name=" + name + ", users=" + users + "]";
-	}
-
-	
-	
 }

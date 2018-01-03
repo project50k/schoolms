@@ -26,10 +26,9 @@
 		<thead>
 			<tr>
 				<th>ID</th>
-				<th>NAME</th>
-				<th>E-MAIL</th>
+				<th>GROUP NAME</th>
+				<th>STUDENTS IN GROUP</th>
 				<th>DETAILS</th>
-				<th>GROUP</th>
 				<th>OPTION</th>
 			</tr>
 		</thead>
@@ -41,21 +40,19 @@
 				<td></td>
 				<td></td>
 				<td></td>
+				<td></td>
 			</tr>
 		</tfoot>
 		<tbody>
-		<c:forEach items="${allStudents}" var="stud">
+		<c:forEach items="${allSchoolgroups}" var="stud">
 		<tr>
 				<td><c:out value="${stud.id}" /></td>
-				<td><c:out value="${stud.username}" /></td>
-				<td><c:out value="${stud.email}" /></td>
-				<td>cell4_1</td>
-				<td>cell5_1</td>
-				<td>cell6_1</td>
+				<td><c:out value="${stud.groupname}" /></td>
+				<td><c:out value="${stud.users.size()}" /></td>
+				<td><c:out value="DETAILS" /></td>
+				<td><c:out value="EDIT/DEL" /></td>
 			</tr>
-		
 		</c:forEach>
-			
 		</tbody>
 		</tr>
 	</table>

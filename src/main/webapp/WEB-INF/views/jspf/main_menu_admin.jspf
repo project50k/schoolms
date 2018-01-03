@@ -6,8 +6,8 @@
 			      <i class="fa fa-caret-down"></i>
 			    </button>
 			    <div class="dropdown-content">
-			      <a href="#">All groups</a>
-			      <a href="#">New group</a>		      
+			       <a href="${pageContext.request.contextPath}/allSchoolgroups">All groups</a>
+			      <a href="#">Add group</a>		      
 			    </div>
 			  </div> 
 			  <div class="dropdown">
@@ -16,7 +16,7 @@
 			    </button>
 			    <div class="dropdown-content">
 			      <a href="${pageContext.request.contextPath}/allTeachers">All teachers</a>
-			      <a href="#">New teacher</a>
+			      <a href="#">Add teacher</a>
 			    </div>
 			  </div>
 			  <div class="dropdown">
@@ -24,8 +24,8 @@
 			      <i class="fa fa-caret-down"></i>
 			    </button>
 			    <div class="dropdown-content">
-			    <a href="${pageContext.request.contextPath}/allStudents">All students</a>
-			    <a href="${pageContext.request.contextPath}/addStudents">Add students</a>
+			    <a href="${pageContext.request.contextPath}/student/all">All students</a>
+			    <a href="${pageContext.request.contextPath}/student/add">Add student</a>
 			    </div>
 			  </div> 
 			  <a href=''>Account</a>
